@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Carrinho de compra</h1>
+    <!--por enquanto vou usar o UL (ou lista) pra fazer, mas pretendo refazer
+    esse trabalho utilizando o table (ou tabela)-->
+    <div>
+        <h3>Produtos</h3>
+        <ul id="id_list">
+            <li>teste pra remover</li>
+        </ul>
+
+        <h3>Preços</h3>
+        <ul id="id_price">
+            <li>R$ 9.000,00</li>
+        </ul>
+
+        <span>Resultado da soma: </span><span id="visor">teste</span>
+
+        <br>
+        <input type="text" id="id_prod" placeholder="digite o produto">
+        <input type="text" id="id_prodPrice" placeholder="digite o preço">
+        <br><br>
+        <button onclick="add()" id="id_btn">Adicionar</button>
+        <button onclick="sum()" id="id_sum">Somar preços</button>
+        <button onclick="erase()" id="id_erase">Apagar Último</button>
+        <button onclick="pay()" id="id_pay">Pagar</button>
+        <p id="payMethods"></p>
+
+    </div>
+
+    <script>
+        
+        function add(){
+            let produName = document.getElementById('id_prod').value
+            let produPrice = Number(document.getElementById('id_prodPrice').value)
+
+            let priceList = document.getElementById('id_price')
+            let produList = document.getElementById('id_list')
+
+            let liItem = document.createElement('li')
+            let liPrice = document.createElement('li')
+
+            liItem.innerHTML = produName
+            liPrice.innerHTML = produPrice
+            produList.appendChild(liItem)
+            priceList.appendChild(liPrice)
+        }
+
+        function erase() {
+            let priceList = document.getElementById('id_price')
+            let produList = document.getElementById('id_list')
+
+            produList.removeChild(produList.lastElementChild)
+            priceList.removeChild(priceList.lastElementChild)
+        }
+
+        function sum(){
+            let priceList = document.getElementById('id_price')
+            let arrayPrice = priceList.getElementsByTagName('li')
+            let values = []
+            for (let i = 0; i < arrayPrice.length; i++) {
+                let indPrice = Number(arrayPrice[i].textContent)
+                values.push(indPrice)
+            }
+            let totalPrice = values.reduce((accumulator, currentValue) => 
+            accumulator + currentValue, 0)
+            document.getElementById('visor').innerHTML =  totalPrice.toFixed(2)
+            }
+
+        function pay(){
+            let interest = document.createElement('button')
+            let normal = document.createElement('button')
+            normal.innerText = 'Sem juros'
+            interest.innerText = 'Com juros'
+            let divis = document.getElementById('payMethods')
+            divis.appendChild(interest)
+            divis.appendChild(normal)
+            document.getElementById('id_pay')
+            normal.onclick = function (){
+                let precoSem = Number(document.getElementById('visor').innerText)
+                alert(`Preço a vista é : R$ ${precoSem}`)
+            }
+
+            interest.onclick = function(){
+                let precoCom = Number(document.getElementById('visor').innerText)
+                let result = precoCom * 1.15
+                alert(`Preço com juros de 15% é de R$ ${result}`)
+            }
+        }
+    </script>
+</body>
+</html>
