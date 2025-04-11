@@ -7,34 +7,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Carrinho de compra</h1>
-    <!--por enquanto vou usar o UL (ou lista) pra fazer, mas pretendo refazer
-    esse trabalho utilizando o table (ou tabela)-->
-    <div>
-        <h3>Produtos</h3>
-        <ul id="id_list">
-            <li>teste pra remover</li>
-        </ul>
+    <div class="main_div">
+        <h1>Carrinho de compra</h1>
+        <!--por enquanto vou usar o UL (ou lista) pra fazer, mas pretendo refazer
+        esse trabalho utilizando o table (ou tabela)-->
+        <div class="lista">
+            <div class="lista_nome">
+                <h3>Produtos</h3>
+                <ul id="id_list">
+                    <li>teste pra remover</li>
+                </ul>
+            </div>
 
-        <h3>Preços</h3>
-        <ul id="id_price">
-            <li>R$ 9.000,00</li>
-        </ul>
+            <div class="lista_preco">
+                <h3>Preços</h3>
+                <ul id="id_price">
+                    <li>R$ 9.000,00</li>
+                </ul>
+            </div>
+        </div>
 
-        <span>Resultado da soma: </span><span id="visor">teste</span>
 
-        <br>
-        <input type="text" id="id_prod" placeholder="digite o produto">
-        <input type="text" id="id_prodPrice" placeholder="digite o preço">
-        <br><br>
-        <button onclick="add()" id="id_btn">Adicionar</button>
-        <button onclick="sum()" id="id_sum">Somar preços</button>
-        <button onclick="erase()" id="id_erase">Apagar Último</button>
-        <button onclick="pay()" id="id_pay">Pagar</button>
-        <p id="payMethods"></p>
 
+            <br>
+            <input type="text" id="id_prod" placeholder="digite o produto">
+            <input type="text" id="id_prodPrice" placeholder="digite o preço">
+            <p>Resultado da soma: </span><span id="visor">RESULTADO AQUI</p>
+            <button onclick="add()" id="id_btn">Adicionar</button>
+            <button onclick="sum()" id="id_sum">Somar preços</button>
+            <button onclick="erase()" id="id_erase">Apagar Último</button>
+            <button onclick="pay()" id="id_pay">Pagar</button>
+            <p id="payMethods"></p>
     </div>
-
     <script>
         
         function add(){
@@ -74,26 +78,28 @@
             document.getElementById('visor').innerHTML =  totalPrice.toFixed(2)
             }
 
-        function pay(){
-            let interest = document.createElement('button')
-            let normal = document.createElement('button')
-            normal.innerText = 'Sem juros'
-            interest.innerText = 'Com juros'
-            let divis = document.getElementById('payMethods')
-            divis.appendChild(interest)
-            divis.appendChild(normal)
-            document.getElementById('id_pay')
-            normal.onclick = function (){
-                let precoSem = Number(document.getElementById('visor').innerText)
-                alert(`Preço a vista é : R$ ${precoSem}`)
-            }
+            const botao = document.getElementById('id_pay')
+            botao.addEventListener('click', function(){
+                let interest = document.createElement('button')
+                let normal = document.createElement('button')
+                normal.innerText = 'Sem juros'
+                interest.innerText = 'Com juros'
+                let divis = document.getElementById('payMethods')
+                divis.appendChild(interest)
+                divis.appendChild(normal)
+                document.getElementById('id_pay')
+                normal.onclick = function (){
+                    let precoSem = Number(document.getElementById('visor').innerText)
+                    alert(`Preço a vista é : R$ ${precoSem}`)
+                }
 
-            interest.onclick = function(){
-                let precoCom = Number(document.getElementById('visor').innerText)
-                let result = precoCom * 1.15
-                alert(`Preço com juros de 15% é de R$ ${result}`)
-            }
-        }
+                interest.onclick = function(){
+                    let precoCom = Number(document.getElementById('visor').innerText)
+                    let result = precoCom * 1.15
+                    alert(`Preço com juros de 15% é de R$ ${result}`)
+                }
+                    this.disabled = true
+            })
     </script>
 </body>
 </html>
